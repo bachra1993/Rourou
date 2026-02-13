@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forever With You ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  overflow-x: hidden;
+}
+
+h1 {
+  margin-top: 40px;
+  font-size: 3em;
+}
+
+.countdown {
+  font-size: 1.5em;
+  margin: 20px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background: white;
+  color: #ff4e50;
+}
+
+#noBtn {
+  background: #ff4e50;
+  color: white;
+  position: relative;
+}
+
+.slideshow {
+  width: 300px;
+  height: 400px;
+  margin: 30px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.slideshow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+#loveMessage {
+  display: none;
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Will You Be Mine Forever? ❤️</h1>
+
+<div class="countdown" id="countdown"></div>
+
+<div class="slideshow">
+  <!-- Replace these with your real image file names -->
+  <img src="photo1.jpg" class="slide">
+  <img src="photo2.jpg" class="slide">
+  <img src="photo3.jpg" class="slide">
+</div>
+
+<button id="yesBtn" onclick="sayYes()">Yes 😍</button>
+<button id="noBtn" onmouseover="moveButton()">No 😏</button>
+
+<div id="loveMessage">
+  You just made me the happiest person alive.  
+  I cannot wait to marry you on 29 June 2026 💍❤️
+</div>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <!-- Replace with your romantic mp3 file -->
+  <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Countdown Timer
+const weddingDate = new Date("June 29, 2026 00:00:00").getTime();
+const countdown = document.getElementById("countdown");
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdown.innerHTML =
+    "Countdown to our Wedding 💍: " +
+    days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+}, 1000);
+
+// Moving No Button
+function moveButton() {
+  const button = document.getElementById("noBtn");
+  const x = Math.random() * window.innerWidth - 100;
+  const y = Math.random() * window.innerHeight - 50;
+
+  button.style.position = "absolute";
+  button.style.left = x + "px";
+  button.style.top = y + "px";
+}
+
+// Yes Button
+function sayYes() {
+  document.getElementById("loveMessage").style.display = "block";
+}
+
+// Slideshow
+let slideIndex = 0;
+const slides = document.getElementsByClassName("slide");
+
+function showSlides() {
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) { slideIndex = 1 }
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 3000);
+}
+
+showSlides();
+
+</script>
+
+</body>
+</html>
