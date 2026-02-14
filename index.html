@@ -7,133 +7,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-  --bg: linear-gradient(135deg, #ff6a88, #ff99ac);
-  --card-bg: rgba(255, 255, 255, 0.18);
-  --text-main: #ffffff;
-  --accent: #ff4d6d;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-main);
-}
-
-.container {
-  width: 92%;
-  max-width: 420px;
-  padding: 30px 25px;
-  border-radius: 24px;
-  background: var(--card-bg);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  font-family: 'Segoe UI', sans-serif;
   text-align: center;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  overflow-x: hidden;
 }
 
 h1 {
-  font-size: 2.2em;
-  margin: 0 0 10px;
-}
-
-.subtitle {
-  font-size: 1.05em;
-  opacity: 0.9;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  font-size: 3em;
 }
 
 .countdown {
-  font-size: 1em;
-  margin-bottom: 22px;
-  line-height: 1.4;
-  opacity: 0.95;
+  font-size: 1.4em;
+  margin: 15px;
 }
 
-.media {
-  width: 100%;
-  height: 380px;
-  border-radius: 18px;
+button {
+  padding: 12px 22px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 8px;
+  transition: 0.3s;
+}
+
+#yesBtn { 
+  background: white; 
+  color: #ff4e50; 
+  font-weight: bold;
+}
+
+#noBtn { 
+  background: #ff4e50; 
+  color: white; 
+  position: absolute; 
+}
+
+.slideshow {
+  width: 300px;
+  height: 400px;
+  margin: 20px auto;
+  border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 22px;
   position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .slide {
   position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 1s ease-in-out;
 }
 
-.slide.active {
-  opacity: 1;
-}
+.slide.active { opacity: 1; }
 
-.media video {
+video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 12px 18px;
-  border-radius: 999px;
-  border: none;
-  font-size: 0.95em;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-#yesBtn {
-  background: white;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-#noBtn {
-  background: rgba(255,255,255,0.25);
-  color: white;
-  position: absolute; /* important for jumping */
-}
-
 #loveMessage {
   display: none;
-  font-size: 1.05em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.letterBtn {
-  background: transparent;
-  color: white;
-  text-decoration: underline;
-  font-size: 0.95em;
+  font-size: 1.5em;
+  margin-top: 20px;
 }
 
 .heart {
   position: fixed;
-  font-size: 22px;
+  color: white;
   animation: floatUp 5s linear forwards;
   pointer-events: none;
 }
@@ -146,97 +95,68 @@ button:hover {
 #letterPopup {
   display: none;
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(6px);
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.letterCard {
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
   background: white;
-  color: #333;
-  padding: 26px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 340px;
-  text-align: center;
-}
-
-.letterCard h3 {
-  margin-top: 0;
-  color: var(--accent);
-}
-
-.closeBtn {
-  margin-top: 15px;
-  background: var(--accent);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
+  color: #ff4e50;
+  padding: 25px;
+  border-radius: 15px;
+  width: 300px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1>Happy Valentine’s Day, Rourou ❤️</h1>
-  <div class="subtitle">Counting down to our forever</div>
+<h1>Happy Valentine’s Day, Rourou ❤️</h1>
+<div class="countdown" id="countdown"></div>
 
-  <div class="countdown" id="countdown"></div>
-
-  <div class="media">
-    <div class="slide active">
-      <video src="video1.mp4" autoplay muted loop playsinline></video>
-    </div>
-    <div class="slide">
-      <video src="video2.mp4" autoplay muted loop playsinline></video>
-    </div>
+<div class="slideshow">
+  <div class="slide active">
+    <video src="video1.mp4" autoplay muted loop playsinline></video>
   </div>
-
-  <div class="buttons">
-    <button id="yesBtn" onclick="sayYes()">Be My Valentine 💘</button>
-    <button id="noBtn" onmouseover="moveButton()">No 😏</button>
+  <div class="slide">
+    <video src="video2.mp4" autoplay muted loop playsinline></video>
   </div>
-
-  <div id="loveMessage">
-    Rourou, you are my favorite person,<br>
-    my safest place, and my future.<br>
-    I love you more every day. ❤️
-  </div>
-
-  <button class="letterBtn" onclick="openLetter()">Read my love letter</button>
 </div>
 
+<button id="yesBtn" onclick="sayYes()">Be My Valentine 💘</button>
+<button id="noBtn" onmouseover="moveButton()">No 😏</button>
+
+<div id="loveMessage">
+  Rourou, you are my favorite person,<br>
+  my safest place, and my future.<br>
+  I love you more every day. ❤️
+</div>
+
+<br>
+<button onclick="openLetter()">💌 Read My Love Letter</button>
+
 <div id="letterPopup">
-  <div class="letterCard">
-    <h3>My Rourou,</h3>
-    <p>
-      Loving you feels like home.<br><br>
-      Every laugh, every memory, every quiet moment
-      brings us closer to the life we’re building together.<br><br>
-      I can’t wait to marry you 💍
-    </p>
-    <button class="closeBtn" onclick="closeLetter()">Close</button>
-  </div>
+  <h3>My Rourou,</h3>
+  <p>
+    Loving you feels like home.<br><br>
+    Every laugh, every memory, every quiet moment
+    brings us closer to the life we’re building together.<br><br>
+    I can’t wait spend forever with you 💍
+    My seeeeeeeeeexy wife
+  </p>
+  <button onclick="closeLetter()">Close</button>
 </div>
 
 <script>
-// Wedding countdown
+// Countdown to wedding day 💍
 const weddingDate = new Date("June 29, 2026 00:00:00").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
-  const d = weddingDate - now;
+  const distance = weddingDate - now;
 
-  const days = Math.floor(d / (1000*60*60*24));
-  const hours = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((d%(1000*60*60))/(1000*60));
-  const seconds = Math.floor((d%(1000*60))/1000);
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
 
   document.getElementById("countdown").innerHTML =
     `Days until our wedding 💍<br>${days} days · ${hours}h ${minutes}m ${seconds}s`;
@@ -249,9 +169,9 @@ setInterval(() => {
   slides[index].classList.remove("active");
   index = (index + 1) % slides.length;
   slides[index].classList.add("active");
-}, 6000);
+}, 5000);
 
-// Jumping "No" button (classic)
+// Jumping "No" button
 function moveButton() {
   const btn = document.getElementById("noBtn");
   const btnWidth = btn.offsetWidth;
@@ -284,7 +204,7 @@ function sayYes() {
 
 // Letter modal
 function openLetter() {
-  document.getElementById("letterPopup").style.display = "flex";
+  document.getElementById("letterPopup").style.display = "block";
 }
 function closeLetter() {
   document.getElementById("letterPopup").style.display = "none";
