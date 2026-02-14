@@ -114,7 +114,7 @@ button:hover {
 #noBtn {
   background: rgba(255,255,255,0.25);
   color: white;
-  position: relative;
+  position: absolute; /* important for jumping */
 }
 
 #loveMessage {
@@ -219,8 +219,7 @@ button:hover {
       Loving you feels like home.<br><br>
       Every laugh, every memory, every quiet moment
       brings us closer to the life we’re building together.<br><br>
-      I can’t wait spend forever with you 💍
-      My sexxxxxxxxxxy wife.
+      I can’t wait to marry you 💍
     </p>
     <button class="closeBtn" onclick="closeLetter()">Close</button>
   </div>
@@ -252,10 +251,20 @@ setInterval(() => {
   slides[index].classList.add("active");
 }, 6000);
 
-// Playful no button
+// Jumping "No" button (classic)
 function moveButton() {
   const btn = document.getElementById("noBtn");
-  btn.style.transform = `translate(${Math.random()*60-30}px, ${Math.random()*40-20}px)`;
+  const btnWidth = btn.offsetWidth;
+  const btnHeight = btn.offsetHeight;
+
+  const maxX = window.innerWidth - btnWidth - 10;
+  const maxY = window.innerHeight - btnHeight - 10;
+
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+
+  btn.style.left = randomX + "px";
+  btn.style.top = randomY + "px";
 }
 
 // Hearts
