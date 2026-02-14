@@ -68,6 +68,12 @@ button {
   opacity: 1;
 }
 
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 #loveMessage {
   display: none;
   font-size: 1.5em;
@@ -92,4 +98,125 @@ button {
   display: none;
   position: fixed;
   top: 20%;
-  left: 50
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: #ff4e50;
+  padding: 25px;
+  border-radius: 15px;
+  width: 300px;
+  animation: fadeIn 0.5s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Valentine’s Day, Rourou ❤️</h1>
+
+<div class="countdown" id="countdown"></div>
+
+<div class="slideshow">
+  <div class="slide active">
+    <video src="video1.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <div class="slide">
+    <video src="video2.mp4" autoplay muted loop playsinline></video>
+  </div>
+</div>
+
+<button id="yesBtn" onclick="sayYes()">Be My Valentine, Rourou 💘</button>
+<button id="noBtn" onmouseover="moveButton()">Nope 😏</button>
+
+<div id="loveMessage">
+  Rourou, you make my world brighter every single day.  
+  I’m so grateful I get to love you.  
+  Happy Valentine’s Day, my forever ❤️
+</div>
+
+<br>
+
+<button onclick="openLetter()">💌 Read My Love Letter</button>
+
+<div id="letterPopup">
+  <h3>My Rourou,</h3>
+  <p>
+    Happy Valentine’s Day ❤️<br><br>
+    Loving you is my favorite thing in the world.  
+    Thank you for your kindness, your laughter,  
+    and the way you make everything feel like home.<br><br>
+    I choose you. Always. 💕
+  </p>
+  <button onclick="closeLetter()">Close</button>
+</div>
+
+<script>
+// Love timer
+const startDate = new Date("February 14, 2023 00:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const distance = now - startDate;
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((distance%(1000*60))/1000);
+
+  document.getElementById("countdown").innerHTML =
+  `Rourou & Me 💕<br>${days} days ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+// Slideshow logic
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 5000);
+
+// Moving "No" button
+function moveButton() {
+  const btn = document.getElementById("noBtn");
+  const maxX = window.innerWidth - btn.offsetWidth;
+  const maxY = window.innerHeight - btn.offsetHeight;
+
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * maxX + "px";
+  btn.style.top = Math.random() * maxY + "px";
+}
+
+// Hearts
+function sayYes() {
+  document.getElementById("loveMessage").style.display = "block";
+  document.getElementById("noBtn").style.display = "none";
+
+  for(let i=0;i<80;i++){
+    let heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML=["❤️","💖","💘","💕"][Math.floor(Math.random()*4)];
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  }
+}
+
+// Letter
+function openLetter(){
+  document.getElementById("letterPopup").style.display="block";
+}
+function closeLetter(){
+  document.getElementById("letterPopup").style.display="none";
+}
+</script>
+
+</body>
+</html>
